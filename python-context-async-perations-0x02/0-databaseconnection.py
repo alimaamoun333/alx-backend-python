@@ -16,3 +16,12 @@ class DatabaseConnection:
     def __exit__(self, exc_type, exc_value, traceback):
         if self.conn:
             self.conn.close()
+
+# Use the context manager with the with statement to run SELECT * FROM users
+if __name__ == "__main__":
+    with DatabaseConnection("users.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users")
+        results = cursor.fetchall()
+        for row in results:
+            print(row)
